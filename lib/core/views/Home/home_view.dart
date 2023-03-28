@@ -13,6 +13,17 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(
+            bottom: 80), // Mueve el botón flotante 50 píxeles hacia arriba
+        child: FloatingActionButton(
+          onPressed: () {
+            // Acción a realizar cuando se presione el botón
+          },
+          backgroundColor: const Color(0xFF17203A),
+          child: Icon(Icons.add),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -29,7 +40,8 @@ class _HomeViewState extends State<HomeView> {
             ),
             Container(
               height: 280,
-              width: 260,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 25, 38, 218),
                 borderRadius: BorderRadius.all(
