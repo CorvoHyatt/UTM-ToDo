@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
-import 'package:to_do_app/core/utils/rive_utils.dart';
 
 import '../../EntryPoint/entry_point.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({
     super.key,
   });
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _isShowloading = false;
   bool _isShowConfetti = false;
@@ -24,7 +23,14 @@ class _SignInFormState extends State<SignInForm> {
   late SMITrigger reset;
   late SMITrigger confetti;
 
-  void signIn(BuildContext context) {
+  StateMachineController getRiveController(Artboard artboard) {
+    StateMachineController? controller =
+        StateMachineController.fromArtboard(artboard, "State Machine 1");
+    artboard.addController(controller!);
+    return controller;
+  }
+
+  void signUp(BuildContext context) {
     setState(() {
       _isShowloading = true;
       _isShowConfetti = true;
@@ -62,6 +68,28 @@ class _SignInFormState extends State<SignInForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text("User name", style: TextStyle(color: Colors.black54)),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "";
+                    }
+                    return null;
+                  },
+                  onSaved: (userName) {},
+                  obscureText: false,
+                  decoration: InputDecoration(
+                      prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SvgPicture.asset("assets/icons/User.svg"),
+                    ),
+                  )),
+                ),
+              ),
               const Text("Email", style: TextStyle(color: Colors.black54)),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 16),
@@ -75,14 +103,13 @@ class _SignInFormState extends State<SignInForm> {
                   onSaved: (email) {},
                   obscureText: false,
                   decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: SvgPicture.asset("assets/icons/email.svg"),
-                      ),
+                      prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SvgPicture.asset("assets/icons/email.svg"),
                     ),
-                  ),
+                  )),
                 ),
               ),
               const Text("Password", style: TextStyle(color: Colors.black54)),
@@ -98,14 +125,36 @@ class _SignInFormState extends State<SignInForm> {
                   onSaved: (password) {},
                   obscureText: true,
                   decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: SvgPicture.asset("assets/icons/password.svg"),
-                      ),
+                      prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SvgPicture.asset("assets/icons/password.svg"),
                     ),
-                  ),
+                  )),
+                ),
+              ),
+              const Text("Confirm password",
+                  style: TextStyle(color: Colors.black54)),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "";
+                    }
+                    return null;
+                  },
+                  onSaved: (confirmPassword) {},
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SvgPicture.asset("assets/icons/password.svg"),
+                    ),
+                  )),
                 ),
               ),
               Padding(
@@ -123,11 +172,11 @@ class _SignInFormState extends State<SignInForm> {
                         backgroundColor: const Color(0xFFF77D8E),
                         minimumSize: const Size(double.infinity, 56)),
                     onPressed: () {
-                      signIn(context);
+                      signUp(context);
                     },
                     icon: const Icon(CupertinoIcons.arrow_right,
                         color: Color(0xFFFE0037)),
-                    label: const Text("Sign In")),
+                    label: const Text("Sign up")),
               )
             ],
           ),
@@ -138,7 +187,7 @@ class _SignInFormState extends State<SignInForm> {
                   "assets/RiveAssets/check.riv",
                   onInit: (artboard) {
                     StateMachineController controller =
-                        RiveUtils.getRiveController(artboard);
+                        getRiveController(artboard);
                     check = controller.findSMI("Check") as SMITrigger;
                     error = controller.findSMI("Error") as SMITrigger;
                     reset = controller.findSMI("Reset") as SMITrigger;
@@ -154,7 +203,7 @@ class _SignInFormState extends State<SignInForm> {
                     "assets/RiveAssets/confetti.riv",
                     onInit: (artboard) {
                       StateMachineController controller =
-                          RiveUtils.getRiveController(artboard);
+                          getRiveController(artboard);
                       confetti =
                           controller.findSMI("Trigger explosion") as SMITrigger;
                     },
