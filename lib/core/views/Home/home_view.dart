@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Components/note_card.dart';
@@ -14,12 +15,9 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Container(
-        margin: EdgeInsets.only(
-            bottom: 80), // Mueve el botón flotante 50 píxeles hacia arriba
+        margin: EdgeInsets.only(bottom: 80),
         child: FloatingActionButton(
-          onPressed: () {
-            // Acción a realizar cuando se presione el botón
-          },
+          onPressed: () {},
           backgroundColor: const Color(0xFF17203A),
           child: Icon(Icons.add),
         ),
@@ -38,17 +36,28 @@ class _HomeViewState extends State<HomeView> {
                     ),
               ),
             ),
-            Container(
-              height: 280,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 25, 38, 218),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              child: Row(),
+            GestureDetector(
+              onLongPress: () {
+                showMenu(
+                  context: context,
+                  position: RelativeRect.fromLTRB(0, 0, 0, 0),
+                  items: [
+                    PopupMenuItem(
+                      child: Text('Borrar'),
+                      onTap: () {
+                        // Acción para borrar
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Text('Editar'),
+                      onTap: () {
+                        // Acción para editar
+                      },
+                    ),
+                  ],
+                );
+              },
+              child: NoteCard(),
             ),
           ],
         ),
