@@ -95,6 +95,4 @@ List<RiveAsset> bottomNavs = [
       artboard: "SEARCH",
       stateMachineName: "SEARCH_Interactivity",
       title: "Search"),
-  RiveAsset("assets/RiveAssets/icons.riv",
-      artboard: "USER", stateMachineName: "USER_Interactivity", title: "User"),
 ];

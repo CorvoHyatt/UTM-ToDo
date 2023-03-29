@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/models/todo/todo_model.dart';
+import 'sub_category.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({
-    super.key,
-  });
-
+  late Todo nota;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,6 +37,7 @@ class NoteCard extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 8),
                 child: Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonummy sagittis. Aliquam ante. Fadipiscing elit. Sed nonummy sagittis. Aliquam ante. Fadipiscing elit. Sed nonummy sagittis. Aliquam ante. Fadipiscing elit. Sed nonummy sagittis. Aliquam ante. Fadipiscing elit. Sed nonummy sagittis. Aliquam ante. Fdipiscing elit. Sed nonummy sagittis. Aliquam ante. Fusce semper, augue ac auctor commodo. Dignissim ullamcorper. Nulla facilisi. Proin condimentum. Curabitur euismod, justo ut.",
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     color: Colors.white60,
                     fontSize: 18,
@@ -51,7 +50,7 @@ class NoteCard extends StatelessWidget {
             bottom: 8,
             right: MediaQuery.of(context).size.width / 2,
             child: Row(
-              children: [
+              children: const [
                 Icon(
                   Icons.warning_amber_outlined,
                   color: Colors.white,
@@ -65,6 +64,28 @@ class NoteCard extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            right: 0,
+            left: 130,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  SizedBox(width: 8),
+                  BuildSubCategory("Category 1"),
+                  SizedBox(width: 8),
+                  BuildSubCategory("Category 2"),
+                  SizedBox(width: 8),
+                  BuildSubCategory("Category 3"),
+                  SizedBox(width: 8),
+                  BuildSubCategory("Category 4"),
+                  SizedBox(width: 8),
+                  BuildSubCategory("Category 5"),
+                ],
+              ),
             ),
           ),
         ],

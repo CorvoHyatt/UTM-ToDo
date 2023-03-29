@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/views/Home/Components/custom_add_todo_dialog.dart';
 
 import 'Components/note_card.dart';
 
@@ -11,13 +11,25 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  bool isAddTodoShow = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: 80),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Future.delayed(Duration(milliseconds: 2), () {
+              setState(() {
+                isAddTodoShow = true;
+              });
+              customAddTodoDialog(context, onClosed: (_) {
+                setState(() {
+                  isAddTodoShow = false;
+                });
+              });
+            });
+          },
           backgroundColor: const Color(0xFF17203A),
           child: Icon(Icons.add),
         ),
